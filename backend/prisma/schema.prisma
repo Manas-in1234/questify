@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(cuid())
+  username String @unique
+  email    String @unique
+  password String
+
+  level   Int @default(1)
+  xp      Int @default(0)
+  totalXp Int @default(0)
+  streak  Int @default(0)
+
+  quests Quest[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Quest {
+  id          String  @id @default(cuid())
+  title       String
+  description String?
+  category    String
+  difficulty  String
+  xp          Int
+
+  completed Boolean @default(false)
+  rewardClaimed  Boolean  @default(false)
+
+  dueDate   DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
