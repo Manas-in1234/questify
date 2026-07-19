@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://questify-backend-5w28.onrender.com/",
+  baseURL: "https://questify-backend-5w28.onrender.com/api",
 });
 
 api.interceptors.request.use((config) => {
